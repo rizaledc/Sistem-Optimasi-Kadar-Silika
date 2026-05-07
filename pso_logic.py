@@ -2,12 +2,13 @@ import numpy as np
 import joblib
 
 class PSOOptimizer:
-    def __init__(self, model_path, bounds_min, bounds_max):
+    def __init__(self, model_path, bounds_min, bounds_max, feature_names=None):
         # Memuat model Random Forest yang kamu buat di Colab
         self.model = joblib.load(model_path)
         self.bounds_min = bounds_min
         self.bounds_max = bounds_max
         self.dim = len(bounds_min)
+        self.feature_names = feature_names
 
     def optimize(self, n_particles=30, n_iterations=50):
         # Parameter PSO standar (Inersia, Kognitif, Sosial)
@@ -25,7 +26,12 @@ class PSOOptimizer:
 
         for _ in range(n_iterations):
             # Meminta model memprediksi kadar silika di posisi partikel saat ini
-            fitness = self.model.predict(X)
+            if self.feature_names is not None:
+                import pandas as pd
+                input_df = pd.DataFrame(X, columns=self.feature_names)
+                fitness = self.model.predict(input_df)
+            else:
+                fitness = self.model.predict(X)
             
             # Update Personal Best (PBest)
             better_mask = fitness < pbest_val

@@ -74,7 +74,7 @@ bounds_max = np.array([67.0, 33.0, 6000.0, 750.0, 420.0, 11.0, 1.8, 310.0, 310.0
 
 try:
     # Memuat logika optimasi
-    optimizer = PSOOptimizer('models/rf_surrogate_model.pkl', bounds_min, bounds_max)
+    optimizer = PSOOptimizer('models/rf_surrogate_model.pkl', bounds_min, bounds_max, feature_names)
     
     # Sidebar
     with st.sidebar:
@@ -88,7 +88,7 @@ try:
             st.markdown("<span style='color: #64748b; font-size: 0.85em;'>Partikel yang lebih banyak meningkatkan presisi eksplorasi ruang komputasi namun menambah beban pemrosesan.</span>", unsafe_allow_html=True)
             
         st.markdown("<hr>", unsafe_allow_html=True)
-        run_btn = st.button("JALANKAN OPTIMASI", use_container_width=True)
+        run_btn = st.button("JALANKAN OPTIMASI", width='stretch')
 
     # Layout Tabs
     tab1, tab2, tab3 = st.tabs(["Dashboard Optimasi", "Analisis Parameter", "Panduan Operasional"])
@@ -145,7 +145,7 @@ try:
                     "Nilai Rekomendasi": np.round(best_pos, 4)
                 })
                 # Tabel Streamlit bawaan yang otomatis mengambil efek bayangan dari CSS
-                st.dataframe(res_df, use_container_width=True, hide_index=True)
+                st.dataframe(res_df, width='stretch', hide_index=True)
 
         else:
             st.info("Sistem standby. Silakan atur parameter di sidebar dan klik 'JALANKAN OPTIMASI' untuk memulai proses komputasi.")
