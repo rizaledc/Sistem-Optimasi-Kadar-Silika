@@ -9,6 +9,7 @@ app_file: app.py
 pinned: false
 short_description: Sistem dengan Rekomendasi PSO & Random Forest
 license: mit
+python_version: 3.11.9
 ---
 
 # Sistem Optimasi Kadar Silika
